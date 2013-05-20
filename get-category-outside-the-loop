@@ -6,6 +6,9 @@ to use jQuery to add a class to that category, or add a class to the each of the
    
 Purpose: To sort, hide or highlight those links so that the user sees only posts from the category that they clicked on.
 
+
+
+
     <div class="all-the-thumbnails" id="thumbs">
        <?php
       $args = array( 'post_type' => 'foo-post-type', );
@@ -27,6 +30,9 @@ Purpose: To sort, hide or highlight those links so that the user sees only posts
 		    }
 	    ?>
   </div>
+  
+  
+  
   
   
 Why the code is written this way:
