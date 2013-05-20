@@ -1,0 +1,43 @@
+// ######Where you might use it:
+//
+//   If you have a series of custom post types with different categories, 
+//   and you want to listen for a click on links to each one of those categories,
+//   to use jQuery to add a class to that category, or add a class to the each of the other categories.
+//   
+//   Purpose: To sort, hide or highlight those links so that the user sees only posts 
+//            from the category that they clicked on.
+
+    <div class="all-the-thumbnails" id="thumbs">
+       <?php
+      $args = array( 'post_type' => 'foo-post-type', );
+	    $customposttype = new WP_Query( $args );
+	    if( $customposttype->have_posts() ) {
+		    while( $customposttype->have_posts() ) {
+		    $customposttype->the_post();
+		    ?>
+		        <a href="<?php the_permalink() ?>" class="<?php global $post;
+						    foreach(get_the_category($post->ID) as $category) {
+    						   echo $category->slug . ' ';
+                  echo 'universal-thumbs'; } ?>"><?php echo get_the_post_thumbnail($page->ID, 'thumbnail'); ?></a>
+					
+			    <?php
+			    }
+		    }
+		    else {
+			    echo 'No custom posts to display.';
+		    }
+	    ?>
+  </div>
+  
+  
+  // #######Why the code is written this way:
+  // You'll notice that we loop through the categories, 
+  // this is in case a custom post has more than one category.
+  // Then there is a space concatenated on the end of each category.
+  // I add an additional CSS class on the end in order to apply default styles to all the thumbs.
+  // We can remove that class on the thumbs with the jQuery removeClass() function,
+  // along with a click listener.
+  //
+  // We can also remove the universal-thumbs class on a hover state.
+  // So if all our thumbs have a CSS# grayscale filter, we can remove that if the category link is clicked
+  // or if any of our thumbs are hovered on (with a regular a:hover rule.)
