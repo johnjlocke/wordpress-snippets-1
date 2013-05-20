@@ -1,4 +1,4 @@
-*Where you might use it:*
+Where you might use it:
 
 If you have a series of custom post types with different categories, 
 and you want to listen for a click on links to each one of those categories,
@@ -29,7 +29,7 @@ Purpose: To sort, hide or highlight those links so that the user sees only posts
   </div>
   
   
-*Why the code is written this way:*
+Why the code is written this way:
  You'll notice that we loop through the categories, 
  this is in case a custom post has more than one category.
  Then there is a space concatenated on the end of each category.
