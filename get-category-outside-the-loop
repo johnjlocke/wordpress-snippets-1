@@ -46,3 +46,9 @@ Why the code is written this way:
 We can also remove the universal-thumbs class on a hover state.
 So if all our thumbs have a CSS# grayscale filter, we can remove that if the category link is clicked
 or if any of our thumbs are hovered on (with a regular a:hover rule.)
+
+You can find even more values that can be returned from the $category object at:
+   http://codex.wordpress.org/Function_Reference/get_the_category
+   
+   
+   
