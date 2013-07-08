@@ -1,1 +1,51 @@
-//
+/* Some edits I made to the Tribulant WordPress plugin: Slideshow Gallery */
+
+/* Many of the default settings are controlled from the UI on the WordPress backend,
+   and the values are passed to the plugin stylesheet via PHP.
+   To override the styles that you cannot change from the interface, go into
+      Plugins > Edit > Slideshow Gallery > slideshow-gallery/css/gallery-css.php
+   and make the necessary changes. Leave the PHP lines if you want to be able to change from the interface in the future.
+*/
+
+/* The default setting for the plugin with thumbnails turned on is to change the main image on click.
+   For a recent project, I needed to make the slider change on hover of the thumbnail.
+   
+   To make this work, go into Edit Plugin Files > slideshow-gallery/js/gallery.js
+     ~ Look for this block of code: this controls the main images ~
+*/
+
+	  for(i;i<this.l;i++){
+  		this.a[i]={};
+			var h=m[i], a=this.a[i];
+			a.t= tag('h3',h)[0].innerHTML;
+			a.d= tag('p',h)[0].innerHTML;
+			a.l= tag('a',h)[0]? tag('a',h)[0].href:'';
+			a.tg = tag('a',h)[0] != '' ? tag('a',h)[0].target:'_self';
+			a.p= tag('span',h)[0].innerHTML;
+			if(this.thumbs){
+				var g = tag('img',h)[0];
+				this.p.appendChild(g);
+				w+=parseInt(g.offsetWidth);
+				if(i!=this.l-1){
+					g.style.marginRight=this.spacing+'px';
+					w+=this.spacing
+				}
+				this.p.style.width=w+'px';
+				g.style.opacity=this.thumbOpacity/100;
+				g.style.filter='alpha(opacity='+this.thumbOpacity+')';
+				g.onmouseover=new Function('TINY.alpha.set(this,100,5)');
+				g.onmouseout=new Function('TINY.alpha.set(this,'+this.thumbOpacity+',5)');
+				g.onmouseover=new Function(this.n+'.pr('+i+',1)')
+			}
+		}
+      
+/* I changed the last line here from 'onclick' to 'onmouseover'
+      ~ Not smart enough to write this from scratch, smart enough to find the line I need to change ~
+*/
+this.p.style.width=w+'px';
+  			g.style.opacity=this.thumbOpacity/100;
+				g.style.filter='alpha(opacity='+this.thumbOpacity+')';
+				g.onmouseover=new Function('TINY.alpha.set(this,100,5)');
+				g.onmouseout=new Function('TINY.alpha.set(this,'+this.thumbOpacity+',5)');
+				g.onmouseover=new Function(this.n+'.pr('+i+',1)')
+			}
