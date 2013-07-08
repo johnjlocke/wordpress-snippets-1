@@ -35,7 +35,7 @@
 				g.style.filter='alpha(opacity='+this.thumbOpacity+')';
 				g.onmouseover=new Function('TINY.alpha.set(this,100,5)');
 				g.onmouseout=new Function('TINY.alpha.set(this,'+this.thumbOpacity+',5)');
-				g.onmouseover=new Function(this.n+'.pr('+i+',1)')
+				g.onclick=new Function(this.n+'.pr('+i+',1)')
 			}
 		}
       
