@@ -1,0 +1,218 @@
+// Oh hai! In today's exercise, Im'ma try and replicate the Web Profile header on Instagram. 
+// Someone was asking if I could make it fade in and out how it does on the web view.
+// My version is a little ghetto: they use background images to fill their divs, I'm just using <img> tags.
+
+// Looks like they stack images on top of each other, and make them fade in and out with CSS opacity. Sweet!
+
+// I have a little help here: the Alpine Photo Tile for Instagram plug in. 
+// Generate your Client ID and Secret and plug those values in
+// I run the plugin with the following settings: 
+// Style: vertical; Photo Size: Thumb (set it however you need)
+// Number of Photos: 14 (we have two layers, set it to recent photos)
+// Photo Align: Left (to the left, to the left...Everything you own in a box to the left)
+// Max Width: 100%
+
+// Go to the Edit Plugin Files and find: alpine-photo-tile-for-instagram/css/AlpinePhotoTiles_style.css 
+
+// About halfway down the file:
+
+
+/* begin edits */
+.AlpinePhotoTiles-link {       // We're setting the default image container to 20% by 50%, 
+  width:20%;                   // Six of the visible containers will be 20%, the 7th will be 40% by 100%
+  height:50%;                  // 20 + 40 + 20 + 20 = 100   Cool!
+  display:inline-block;
+}
+.AlpinePhotoTiles-link:nth-of-type(1),
+.AlpinePhotoTiles-link:nth-of-type(8) {       // All these are added
+  top: 0;                                     // to position one set of images
+  left: 0;                                    // below the other set of images
+  position: absolute;
+}
+.AlpinePhotoTiles-link:nth-of-type(2),
+.AlpinePhotoTiles-link:nth-of-type(9) {
+   left: 0;
+   top: 50%;
+   position: absolute;
+   margin-top: -5px;
+}
+.AlpinePhotoTiles-link:nth-of-type(3) {
+  left: 20%;
+  width: 40%;
+  height: 100%;
+  position: relative;
+}
+.AlpinePhotoTiles-link:nth-of-type(10) {
+  left: 20%;
+  width: 40%;
+  height: 100%;
+  position: absolute;
+}
+.AlpinePhotoTiles-link:nth-of-type(4),
+.AlpinePhotoTiles-link:nth-of-type(11) {
+  top: 0;
+  left: 60%;
+  position: absolute;
+}
+.AlpinePhotoTiles-link:nth-of-type(5),
+.AlpinePhotoTiles-link:nth-of-type(12) {
+  left: 60%;
+  top: 50%;
+  position: absolute;
+  margin-top: -5px;
+}
+.AlpinePhotoTiles-link:nth-of-type(6),
+.AlpinePhotoTiles-link:nth-of-type(13) {
+  left: 80%;
+  top: 0;
+  position: absolute;
+}
+.AlpinePhotoTiles-link:nth-of-type(7),
+.AlpinePhotoTiles-link:nth-of-type(14) {
+   left: 80%;
+   top: 50%;
+   position: absolute;
+   margin-top: -5px;
+}
+.AlpinePhotoTiles-link:nth-of-type(1),.AlpinePhotoTiles-link:nth-of-type(2),
+.AlpinePhotoTiles-link:nth-of-type(3), .AlpinePhotoTiles-link:nth-of-type(4),
+.AlpinePhotoTiles-link:nth-of-type(5), .AlpinePhotoTiles-link:nth-of-type(6),
+.AlpinePhotoTiles-link:nth-of-type(7) { z-index: 999; }
+
+/* Edited and/or added above rules */
+
+// Add the following to your regular stylesheet, We'll need it in a minute
+
+
+.fadeout {
+  opacity: 0;
+  -webkit-transition: opacity .6s ease-out, z-index .6s ease-out;
+  -moz-transition: opacity .6s ease-out, z-index .6s ease-out;
+  -o-transition: opacity .6s ease-out, z-index .6s ease-out;
+  transition: opacity .6s ease-out, z-index .6s ease-out;
+}
+.zstack { 
+  z-index: 1001;
+}
+
+
+// NOW, go back into the plugin editor, and find
+// That pesky JavaScript is adding inline styles, and we want the images 
+// to take up ALL of the area of the links containing them
+
+// Towards the end of the file: I commented out the original code, just in case things went sideways
+// Mostly, I wanted max-width set at 100%, not a pixel value
+// But I made some padding and margin changes, too, just to tighten up the images
+
+ s.fn.AlpinePhotoTilesPlugin.options = {
+    id: 'AlpinePress',
+    pinIt: false,
+    lightbox:false
+  }
+})( window, jQuery, document );
+  
+  
+(function( w, s ) {
+  s.fn.AlpineAdjustBordersPlugin = function( options ) {
+    return this.each(function() {  
+      var parent = s(this),images = s('img',parent);
+
+      s.each(images,function(){
+        var currentImg = s(this);
+        var width = currentImg.parent().width();
+        
+        // Remove and replace ! important classes
+        if( currentImg.hasClass('AlpinePhotoTiles-img-border') ){
+          width -= 10;
+          currentImg.removeClass('AlpinePhotoTiles-img-border');
+          currentImg.css({
+            //'max-width':(width)+'px',
+            'max-width':'100%',
+            //'padding':'4px',
+            //"margin-left": "1px",
+            //"margin-right": "1px"
+          });
+        }else if( currentImg.hasClass('AlpinePhotoTiles-img-noborder') ){
+          currentImg.removeClass('AlpinePhotoTiles-img-noborder');
+          currentImg.css({
+            //'max-width':(width)+'px',
+            'max-width':'100%',
+            'padding':'0px'
+          });
+        }
+        
+        if( currentImg.hasClass('AlpinePhotoTiles-img-shadow') ){
+          width -= 2;
+          currentImg.removeClass('AlpinePhotoTiles-img-shadow');
+          currentImg.css({
+            "box-shadow": "0 1px 3px rgba(34, 25, 25, 0.4)",
+            "margin-left": "1px",
+            "margin-right": "1px",
+            //'max-width':(width)+'px'
+           'max-width':'100%'
+          });
+        }else if( currentImg.hasClass('AlpinePhotoTiles-img-noshadow') ){
+          currentImg.removeClass('AlpinePhotoTiles-img-noshadow');
+          currentImg.css({
+            //'max-width':(width)+'px',
+            'max-width':'100%',
+            "box-shadow":"none"
+          });
+        }
+        
+        if( currentImg.hasClass('AlpinePhotoTiles-img-highlight') ){
+          currentImg.removeClass('AlpinePhotoTiles-img-highlight');
+          
+          if( '4px' != currentImg.css('padding-right') ){
+            width -= 6;
+            currentImg.css({
+              //'max-width':(width)+'px',
+              'max-width':'100%',
+              'padding':'2px',
+              "margin-left": "1px",
+              "margin-right": "1px"
+            });
+          }
+
+          currentImg.hover(function(){
+            s(this).css({
+              "background-color": options.highlight
+            });
+          },function(){
+            s(this).css({
+              "background-color": "#fff"
+            });
+          });
+        }
+      });
+    });
+  }
+    
+})( window, jQuery );
+
+// Almost there.
+// Slap this in your Footer template, or in your theme JS file
+// This jQuery will roll through the images on a timer,
+// fading out the image on top of the one below it.
+// We had to add z-index to the class, or there ended up being a huge gap where nothing changed
+// because the bottom layer of images were fading out without anyone knowing (Does a tree make a sound?)
+
+<script type="text/javascript">
+var $instaphotos = $('.AlpinePhotoTiles-link'),
+    delay = 4000;
+
+$instaphotos.first().addClass('fadeout');
+
+setInterval(function(){
+	var $current = $instaphotos.filter('.fadeout'),
+	$next = $current.next().length ? $current.next() : $instaphotos.first();
+
+    $current.removeClass('fadeout').addClass('zstack');
+    $next.addClass('fadeout').removeClass('zstack');
+    }, delay
+);
+</script> 
+
+
+// This is not the most elegant solution, but for a guerilla developer like Moi, it works!
+// Peace!
