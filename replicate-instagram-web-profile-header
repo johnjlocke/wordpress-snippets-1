@@ -44,6 +44,7 @@
 }
 .AlpinePhotoTiles-link:nth-of-type(10) {
   left: 20%;
+  top: 0;
   width: 40%;
   height: 100%;
   position: absolute;
@@ -92,7 +93,9 @@
   transition: opacity .6s ease-out, z-index .6s ease-out;
 }
 .zstack { 
-  z-index: 1001;
+  /* z-index: 1001; */
+  display: block;
+  opacity: 1;
 }
 
 
