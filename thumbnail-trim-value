@@ -1,0 +1,15 @@
+// Figure out Trim pattern for thumbnails
+// Given a 16 : 9 ratio
+
+<?php if ( has_post_thumbnail() ) {
+                            $src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'full');
+                            $thumbnailSrc = $src[0]; $wdth = $src[1]; $hght = $src[2]; $perfectsize = (16/9);
+                            $realsize = ($wdth/$hght); 
+                            if ($realsize >= $perfectsize){ $bool = "trimheight"; }
+                            elseif ($realsize < $perfectsize) { $bool = "trimwidth"; }
+                    echo $bool;
+}
+?>
+
+
+// Will tell you whether you need to trim height, wdth, or neither
